@@ -1,5 +1,8 @@
 package com.reggie.controller;
 
+import java.time.LocalDateTime;
+
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,8 +67,21 @@ public class EmployeeController {
 
     //新员工
     @PostMapping
-    public R<String> save(@RequestBody Employee employee){
+    public R<String> save(HttpServletRequest request, @RequestBody Employee employee){
         log.info("新员工，信息{}", employee.toString());
-        return null;
+        
+        //初始密码
+        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+        employee.setCreateTime(LocalDateTime.now());
+        employee.setUpdateTime(LocalDateTime.now());
+        
+        //获得当前用户的id
+        Long empId = (Long) request.getSession().getAttribute("employee");
+        employee.setCreateUser(empId);
+        employee.setUpdateUser(empId);
+
+        employeeService.save(employee);
+
+        return R.success("新增员工成功");
     }
 }
