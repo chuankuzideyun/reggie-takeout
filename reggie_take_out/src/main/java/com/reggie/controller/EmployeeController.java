@@ -75,13 +75,13 @@ public class EmployeeController {
         
         //初始密码
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
+        //employee.setCreateTime(LocalDateTime.now());
+        //employee.setUpdateTime(LocalDateTime.now());
         
         //获得当前用户的id
-        Long empId = (Long) request.getSession().getAttribute("employee");
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
+        //Long empId = (Long) request.getSession().getAttribute("employee");
+        //employee.setCreateUser(empId);
+        //employee.setUpdateUser(empId);
 
         employeeService.save(employee);
 
