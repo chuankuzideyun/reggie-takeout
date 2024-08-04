@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.util.AntPathMatcher;
 
 import com.alibaba.fastjson.JSON;
+import com.reggie.common.BaseContext;
 import com.reggie.common.R;
 
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +49,13 @@ public class LoginCheckFilter implements Filter{
         //需要处理，完成登录
         if (request.getSession().getAttribute("employee")!= null){
             log.info("已登录，id为{}",request.getSession().getAttribute("employee"));
+            
+            Long empId = (Long) request.getSession().getAttribute("employee");
+            BaseContext.setCurrentId(empId);
+            
+            long id = Thread.currentThread().getId();
+            log.info("线程id为：{}", id);
+            
             filterChain.doFilter(request, response);
             return;
         }
