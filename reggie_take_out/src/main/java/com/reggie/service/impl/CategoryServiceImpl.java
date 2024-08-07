@@ -24,7 +24,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     //根据id删除类
     @Override
-    public void remove(Long id){
+    public void remove (Long id){
         LambdaQueryWrapper<Dish> dishLambdaQueryWrapper = new LambdaQueryWrapper<>();
         //是否关联菜品
         dishLambdaQueryWrapper.eq(Dish::getCategoryId,id);
